@@ -16,16 +16,14 @@ var promiseConstructor = require('./promiseConstructor.js');
 var fetchProfileAndWriteToFile = function(readFilePath, writeFilePath) {
   return promiseConstructor.pluckFirstLineFromFileAsync(readFilePath)
     .then(function(user) {
-      promisification.getGitHubProfileAsync(user)
-        .catch(function(err) {
-          console.error(err); 
-        }).then(function(body) {
-          fs.writeFile(writeFilePath, JSON.stringify(body), function(err) {
-            console.error(err);
-          });
-        });
-    }, function(err) {
-      console.error('Trouble reading file: ', err);
+      return promisification.getGitHubProfileAsync(user);
+    })
+    .then(function(body) {
+      fs.appendFile(writeFilePath, JSON.stringify(body), function(err) {
+        if (err) {
+          console.error(err);
+        }
+      });
     });
 };
 
