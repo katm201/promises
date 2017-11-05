@@ -11,7 +11,7 @@
 var fs = require('fs');
 var Promise = require('bluebird');
 var constructors = require('./promiseConstructor.js');
-var promisified = require('./promisification.js')
+var promisified = require('./promisification.js');
 
 var fetchProfileAndWriteToFile = function(readFilePath, writeFilePath) {
   return constructors.pluckFirstLineFromFileAsync(readFilePath)
